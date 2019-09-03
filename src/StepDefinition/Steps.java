@@ -1,5 +1,6 @@
 package StepDefinition;
 
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
@@ -29,7 +30,8 @@ By ClickMenuLogoutElement = By.id("menu-user-log-out");
 //Open chrome browser and navigating to the system
 @Given("^Opend browser and start application$")
 public void opend_browser_and_start_application() throws Throwable {
-	System.setProperty("webdriver.chrome.driver", "F:\\Space Genius tutorial\\chromedriver.exe");
+	System.setProperty("webdriver.chrome.driver",
+		      new File("./libs/chromedriver.exe").getCanonicalPath());
     driver = new ChromeDriver();
     driver.manage().window().maximize();
     driver.get("https://dev-sg.smartreservationservices.com/Admin");
@@ -83,6 +85,7 @@ public void verify_the_Error_message() throws Throwable {
 	Assert.assertTrue("Error message missing", title.equals(driver.findElement(By.cssSelector("div.container.body-content.reservation-body > form > div:nth-child(2) > div > div > ul > li")).getText()));
 }
 
+//Verify the error when either username or password is empty
 @Then("^Verify the error message when \"([^\"]*)\" is empty$")
 public void verify_the_message(String fieldName) throws Throwable {
 	Thread.sleep(5000);
@@ -96,7 +99,7 @@ public void verify_the_message(String fieldName) throws Throwable {
 }
 
 
-
+//Quite the browser
 @Then("^Close the application$")
 public void close_the_application() throws Throwable {
     driver.quit();
